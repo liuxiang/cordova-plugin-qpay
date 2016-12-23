@@ -20,7 +20,7 @@ cordova plugin remove com.wosai.qpay
 
 # 安装
 ```
-cordova plugin add plugins-ws/com.wosai.qpay --variable qpayappid=YOUR_QPAY_APPID
+cordova plugin add https://github.com/liuxiang/cordova-plugin-qpay.git --variable qpayappid=YOUR_QPAY_APPID
 ```
 
 ---
