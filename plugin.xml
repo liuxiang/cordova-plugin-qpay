@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="com.wosai.qpay"
+        version="1.0.0">
+  <name>Cordova Plugin QPay</name>
+  <author>liu xiang</author>
+  <license>Apache 2.0 License</license>
+
+  <js-module src="www/qpay.js" name="QPay">
+    <clobbers target="QPay"/>
+  </js-module>
+
+  <!-- add this to your config.xml -->
+  <!-- <preference name="QPAYAPPID" value="YOUR_QPAY_APP_ID_HERE" /> -->
+  <preference name="QPAYAPPID" />
+
+  <!-- android -->
+  <platform name="android">
+    <hook type="after_plugin_add" src="scripts/android-install.js"/>
+    <hook type="after_plugin_install" src="scripts/android-install.js"/>
+    <hook type="before_plugin_rm" src="scripts/android-install.js"/>
+    <hook type="before_plugin_uninstall" src="scripts/android-install.js"/>
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="QPay">
+        <param name="android-package" value="com.wosai.qpay.QPay"/>
+      </feature>
+      <preference name="QPAYAPPID" value="$QPAYAPPID"/>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/*">
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <activity
+        android:name=".qpay.CallbackActivity"
+        android:label="@string/launcher_name"
+        android:exported="true"
+        android:launchMode="singleTop">
+        <intent-filter>
+          <action android:name="android.intent.action.VIEW"/>
+          <category android:name="android.intent.category.DEFAULT"/>
+          <data android:scheme="qwallet$QPAYAPPID"/>
+        </intent-filter>
+      </activity>
+    </config-file>
+
+    <source-file src="src/android/QPay.java" target-dir="src/com/wosai/qpay"/>
+    <source-file src="src/android/libs/mqqopenpay.jar" target-dir="libs"/>
+
+  </platform>
+
+  <!-- ios -->
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="QPay">
+        <param name="ios-package" value="QPay" onload="true"/>
+      </feature>
+      <preference name="QPAYAPPID" value="$QPAYAPPID"/>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+      <array>
+        <string>QPay</string>
+      </array>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+      <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+      </dict>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+      <array>
+        <dict>
+          <key>CFBundleURLName</key>
+          <string>QPay</string>
+          <key>CFBundleURLSchemes</key>
+          <array>
+            <string>qwallet$QPAYAPPID</string>
+          </array>
+        </dict>
+      </array>
+    </config-file>
+
+    <header-file src="src/ios/QPay.h"/>
+    <source-file src="src/ios/QPay.m"/>
+
+    <header-file src="src/ios/QQWalletDefines.h"/>
+    <source-file src="src/ios/QQWalletDefines.m"/>
+    <header-file src="src/ios/QQWalletSDK.h"/>
+    <source-file src="src/ios/QQWalletSDK.m"/>
+    <header-file src="src/ios/QWApplication.h"/>
+    <source-file src="src/ios/QWApplication.m"/>
+    <header-file src="src/ios/QWMessage.h"/>
+    <source-file src="src/ios/QWMessage.m"/>
+    <header-file src="src/ios/QWServerPayTask.h"/>
+    <source-file src="src/ios/QWServerPayTask.m"/>
+    <header-file src="src/ios/QWTask.h"/>
+    <source-file src="src/ios/QWTask.m"/>
+    <header-file src="src/ios/QWURLEncodeEngine.h"/>
+    <source-file src="src/ios/QWURLEncodeEngine.m"/>
+
+  </platform>
+
+</plugin>
