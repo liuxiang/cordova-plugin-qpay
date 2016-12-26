@@ -171,7 +171,7 @@ public class QPay extends CordovaPlugin {
 			e.printStackTrace();
 		}
 
-		boolean debug = true;// 是否开启debug
+		boolean debug = false;// 是否开启debug
 		if (debug) {
 			String sig_online = signApi(api);// 请手动更新APP_KEY
 			if (api.sig != sig_online) {

@@ -139,7 +139,7 @@
 
     NSString *sig = [params objectForKey:@"sig"];// 传入签名
 
-    BOOL debug = true;// 调试
+    BOOL debug = false;// 调试
     if(debug){
         // 获取签名串
         NSString *appKey = @"d139ae6fb0175e5659dce2a7c1fe84d5";// 测试使用，正式环境请删除
@@ -149,7 +149,7 @@
                                                      tokenId:tokenId
                                                   signingKey:appKey];
 
-        if(sig != sig_online){
+        if(![sig isEqualToString:sig_online]){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"签名错误－纠正" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
             sig = sig_online;
